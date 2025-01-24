@@ -18,5 +18,8 @@ from catboost import CatBoostRegressor
 from sklearn.preprocessing import RobustScaler
 from sklearn.model_selection import KFold, cross_val_score
 
+red = pd.read_csv("./original_dataset/Red.csv")
+white = pd.read_csv("./original_dataset/White.csv")
+sparkling = pd.read_csv("./original_dataset/Sparkling.csv")
+rose = pd.read_csv("./original_dataset/Rose.csv")
 
-print("hello Worl3d")
