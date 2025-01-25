@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2025-01-25">
+    <creator>NetworkX 3.4.2</creator>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <nodes>
+      <node id="file://mioVino.rdf#is_from_region" label="file://mioVino.rdf#is_from_region" />
+      <node id="http://www.w3.org/2001/XMLSchema#string" label="http://www.w3.org/2001/XMLSchema#string" />
+      <node id="file://mioVino.rdf#Winery" label="file://mioVino.rdf#Winery" />
+      <node id="http://www.w3.org/2002/07/owl#Thing" label="http://www.w3.org/2002/07/owl#Thing" />
+      <node id="file://mioVino.rdf#Grape" label="file://mioVino.rdf#Grape" />
+      <node id="http://www.w3.org/2002/07/owl#Class" label="http://www.w3.org/2002/07/owl#Class" />
+      <node id="file://mioVino.rdf#Wine" label="file://mioVino.rdf#Wine" />
+      <node id="N53ab5d6eac774ca380c04c8ac25669a6" label="N53ab5d6eac774ca380c04c8ac25669a6" />
+      <node id="http://www.w3.org/2002/07/owl#Ontology" label="http://www.w3.org/2002/07/owl#Ontology" />
+      <node id="file://mioVino.rdf#Wine_Region" label="file://mioVino.rdf#Wine_Region" />
+      <node id="file://mioVino.rdf#Sparkling_wine" label="file://mioVino.rdf#Sparkling_wine" />
+      <node id="file://mioVino.rdf#is_from_country" label="file://mioVino.rdf#is_from_country" />
+      <node id="http://www.w3.org/2002/07/owl#DatatypeProperty" label="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+      <node id="file://mioVino.rdf#Red_wine" label="file://mioVino.rdf#Red_wine" />
+      <node id="file://mioVino.rdf#Rose_wine" label="file://mioVino.rdf#Rose_wine" />
+      <node id="file://mioVino.rdf" label="file://mioVino.rdf" />
+      <node id="file://mioVino.rdf#White_wine" label="file://mioVino.rdf#White_wine" />
+    </nodes>
+    <edges>
+      <edge source="file://mioVino.rdf#is_from_region" target="http://www.w3.org/2001/XMLSchema#string" id="0" label="http://www.w3.org/2000/01/rdf-schema#range" />
+      <edge source="file://mioVino.rdf#is_from_region" target="file://mioVino.rdf#Wine_Region" id="1" label="http://www.w3.org/2000/01/rdf-schema#domain" />
+      <edge source="file://mioVino.rdf#is_from_region" target="http://www.w3.org/2002/07/owl#DatatypeProperty" id="2" label="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" />
+      <edge source="http://www.w3.org/2001/XMLSchema#string" target="file://mioVino.rdf#is_from_country" id="3" label="http://www.w3.org/2000/01/rdf-schema#range" />
+      <edge source="file://mioVino.rdf#Winery" target="http://www.w3.org/2002/07/owl#Thing" id="4" label="http://www.w3.org/2000/01/rdf-schema#subClassOf" />
+      <edge source="file://mioVino.rdf#Winery" target="http://www.w3.org/2002/07/owl#Class" id="5" label="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" />
+      <edge source="http://www.w3.org/2002/07/owl#Thing" target="file://mioVino.rdf#Wine" id="6" label="http://www.w3.org/2000/01/rdf-schema#subClassOf" />
+      <edge source="http://www.w3.org/2002/07/owl#Thing" target="file://mioVino.rdf#Grape" id="7" label="http://www.w3.org/2000/01/rdf-schema#subClassOf" />
+      <edge source="http://www.w3.org/2002/07/owl#Thing" target="file://mioVino.rdf#Wine_Region" id="8" label="http://www.w3.org/2000/01/rdf-schema#subClassOf" />
+      <edge source="file://mioVino.rdf#Grape" target="http://www.w3.org/2002/07/owl#Class" id="9" label="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" />
+      <edge source="http://www.w3.org/2002/07/owl#Class" target="file://mioVino.rdf#Wine" id="10" label="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" />
+      <edge source="http://www.w3.org/2002/07/owl#Class" target="file://mioVino.rdf#Sparkling_wine" id="11" label="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" />
+      <edge source="http://www.w3.org/2002/07/owl#Class" target="file://mioVino.rdf#Red_wine" id="12" label="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" />
+      <edge source="http://www.w3.org/2002/07/owl#Class" target="file://mioVino.rdf#Rose_wine" id="13" label="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" />
+      <edge source="http://www.w3.org/2002/07/owl#Class" target="file://mioVino.rdf#White_wine" id="14" label="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" />
+      <edge source="http://www.w3.org/2002/07/owl#Class" target="file://mioVino.rdf#Wine_Region" id="15" label="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" />
+      <edge source="file://mioVino.rdf#Wine" target="file://mioVino.rdf#Sparkling_wine" id="16" label="http://www.w3.org/2000/01/rdf-schema#subClassOf" />
+      <edge source="file://mioVino.rdf#Wine" target="file://mioVino.rdf#Red_wine" id="17" label="http://www.w3.org/2000/01/rdf-schema#subClassOf" />
+      <edge source="file://mioVino.rdf#Wine" target="file://mioVino.rdf#Rose_wine" id="18" label="http://www.w3.org/2000/01/rdf-schema#subClassOf" />
+      <edge source="file://mioVino.rdf#Wine" target="file://mioVino.rdf#White_wine" id="19" label="http://www.w3.org/2000/01/rdf-schema#subClassOf" />
+      <edge source="N53ab5d6eac774ca380c04c8ac25669a6" target="http://www.w3.org/2002/07/owl#Ontology" id="20" label="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" />
+      <edge source="http://www.w3.org/2002/07/owl#Ontology" target="file://mioVino.rdf" id="21" label="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" />
+      <edge source="file://mioVino.rdf#Wine_Region" target="file://mioVino.rdf#is_from_country" id="22" label="http://www.w3.org/2000/01/rdf-schema#domain" />
+      <edge source="file://mioVino.rdf#is_from_country" target="http://www.w3.org/2002/07/owl#DatatypeProperty" id="23" label="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" />
+    </edges>
+  </graph>
+</gexf>

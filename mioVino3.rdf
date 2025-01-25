@@ -3,10 +3,20 @@
          xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
          xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
          xmlns:owl="http://www.w3.org/2002/07/owl#"
-         xml:base="file://mioVino.rdf"
-         xmlns="file://mioVino.rdf#">
+         xml:base="file://mioVino3.rdf"
+         xmlns="file://mioVino3.rdf#">
 
-<owl:Ontology rdf:about="file://mioVino.rdf"/>
+<owl:Ontology rdf:about="file://mioVino3.rdf"/>
+
+<owl:ObjectProperty rdf:about="#is_made_by">
+  <rdfs:domain rdf:resource="#Wine"/>
+  <rdfs:range rdf:resource="#Winery"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_made_from">
+  <rdfs:domain rdf:resource="#Wine"/>
+  <rdfs:range rdf:resource="#Grape"/>
+</owl:ObjectProperty>
 
 <owl:DatatypeProperty rdf:about="#is_from_country">
   <rdfs:domain rdf:resource="#Winery"/>

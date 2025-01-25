@@ -1,5 +1,6 @@
 import pandas as pd
-
+import re
+from numpy import nan
 red = pd.read_csv("./original_dataset/Red.csv")
 white = pd.read_csv("./original_dataset/White.csv")
 sparkling = pd.read_csv("./original_dataset/Sparkling.csv")
@@ -18,5 +19,21 @@ wines =  pd.concat([red, white, sparkling, rose], ignore_index=True)
 
 wines['Year'] = wines['Year'].replace('N.V.', 2025) 
 wines['Year'] = wines['Year'].astype('int')
+
+def remove_year(name):
+    return re.sub(r'\s+\d{4}$', '', name).replace(' N.V.', '')
+
+wines['Name'] = wines['Name'].apply(remove_year)
+varieties = pd.read_csv('./modified/Varieties.csv')
+
+
+wines['Grapes'] = nan
+
+for i, wine in wines.iterrows():
+    for variety in varieties['Variety']:
+        if variety in wine['Name']:
+            wines.at[i, 'Grapes'] = variety
+            break
+wines.Grapes = wines.Grapes.fillna('assente')
 
 wines.to_csv("./modified/aggregatedDataset.csv",index=False,encoding="utf-8")
