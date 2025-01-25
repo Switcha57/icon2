@@ -1,122 +1,56 @@
 <?xml version="1.0"?>
-<rdf:RDF xmlns="http://www.semanticweb.org/losur/ontologies/2025/0/untitled-ontology-12/"
-     xml:base="http://www.semanticweb.org/losur/ontologies/2025/0/untitled-ontology-12/"
-     xmlns:ont="http://www.co-ode.org/ontologies/ont.owl#"
-     xmlns:owl="http://www.w3.org/2002/07/owl#"
-     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:xml="http://www.w3.org/XML/1998/namespace"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-    <owl:Ontology/>
-    
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="file://mioVino.rdf"
+         xmlns="file://mioVino.rdf#">
+
+<owl:Ontology rdf:about="file://mioVino.rdf"/>
+
+<owl:DatatypeProperty rdf:about="#is_from_country">
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:domain rdf:resource="#Wine_Region"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#is_from_region">
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:domain rdf:resource="#Wine_Region"/>
+</owl:DatatypeProperty>
+
+<owl:Class rdf:about="#Wine">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Winery">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Red_wine">
+  <rdfs:subClassOf rdf:resource="#Wine"/>
+</owl:Class>
+
+<owl:Class rdf:about="#White_wine">
+  <rdfs:subClassOf rdf:resource="#Wine"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Sparkling_wine">
+  <rdfs:subClassOf rdf:resource="#Wine"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Rose_wine">
+  <rdfs:subClassOf rdf:resource="#Wine"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Grape">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Wine_Region">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Ontology/>
 
 
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Annotation properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://www.co-ode.org/ontologies/ont.owl#Alcohol_contenent -->
-
-    <owl:AnnotationProperty rdf:about="http://www.co-ode.org/ontologies/ont.owl#Alcohol_contenent"/>
-    
-
-
-    <!-- http://www.co-ode.org/ontologies/ont.owl#Grapes -->
-
-    <owl:AnnotationProperty rdf:about="http://www.co-ode.org/ontologies/ont.owl#Grapes"/>
-    
-
-
-    <!-- http://www.co-ode.org/ontologies/ont.owl#Region -->
-
-    <owl:AnnotationProperty rdf:about="http://www.co-ode.org/ontologies/ont.owl#Region"/>
-    
-
-
-    <!-- http://www.co-ode.org/ontologies/ont.owl#Wine_Description -->
-
-    <owl:AnnotationProperty rdf:about="http://www.co-ode.org/ontologies/ont.owl#Wine_Description"/>
-    
-
-
-    <!-- http://www.co-ode.org/ontologies/ont.owl#Wine_style -->
-
-    <owl:AnnotationProperty rdf:about="http://www.co-ode.org/ontologies/ont.owl#Wine_style"/>
-    
-
-
-    <!-- http://www.co-ode.org/ontologies/ont.owl#Winery -->
-
-    <owl:AnnotationProperty rdf:about="http://www.co-ode.org/ontologies/ont.owl#Winery"/>
-    
-
-
-    <!-- http://www.co-ode.org/ontologies/ont.owl#allergens -->
-
-    <owl:AnnotationProperty rdf:about="http://www.co-ode.org/ontologies/ont.owl#allergens"/>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Classes
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://www.co-ode.org/ontologies/ont.owl#Red_wine -->
-
-    <owl:Class rdf:about="http://www.co-ode.org/ontologies/ont.owl#Red_wine">
-        <rdfs:subClassOf rdf:resource="http://www.co-ode.org/ontologies/ont.owl#Wine"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.co-ode.org/ontologies/ont.owl#Rose_wine -->
-
-    <owl:Class rdf:about="http://www.co-ode.org/ontologies/ont.owl#Rose_wine">
-        <rdfs:subClassOf rdf:resource="http://www.co-ode.org/ontologies/ont.owl#Wine"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.co-ode.org/ontologies/ont.owl#Sparkling_wine -->
-
-    <owl:Class rdf:about="http://www.co-ode.org/ontologies/ont.owl#Sparkling_wine">
-        <rdfs:subClassOf rdf:resource="http://www.co-ode.org/ontologies/ont.owl#Wine"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.co-ode.org/ontologies/ont.owl#White_wine -->
-
-    <owl:Class rdf:about="http://www.co-ode.org/ontologies/ont.owl#White_wine">
-        <rdfs:subClassOf rdf:resource="http://www.co-ode.org/ontologies/ont.owl#Wine"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.co-ode.org/ontologies/ont.owl#Wine -->
-
-    <owl:Class rdf:about="http://www.co-ode.org/ontologies/ont.owl#Wine">
-        <ont:allergens>
-            <rdf:Description/>
-        </ont:allergens>
-    </owl:Class>
 </rdf:RDF>
-
-
-
-<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
-
