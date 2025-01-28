@@ -37,3 +37,26 @@ for i, wine in wines.iterrows():
 wines.Grapes = wines.Grapes.fillna('assente')
 
 wines.to_csv("./modified/aggregatedDataset.csv",index=False,encoding="utf-8")
+
+import csv
+from urllib.parse import quote_plus
+# Open the input and output files
+with open('./modified/aggregatedDataset.csv', 'r', encoding='utf-8') as infile, \
+     open('./modified/aggregatedDatasetSanitazed.csv', 'w', newline='', encoding='utf-8') as outfile:
+
+    # Create a CSV reader and writer
+    reader = csv.DictReader(infile)
+    fieldnames = reader.fieldnames  # Get header names
+    writer = csv.DictWriter(outfile, fieldnames=fieldnames)
+    
+    # Write the header row to the output
+    writer.writeheader()
+    
+    # Process each row
+    for row in reader:
+        # URL encode all values in the row
+        encoded_row = {
+            key: quote_plus(value) 
+            for key, value in row.items()
+        }
+        writer.writerow(encoded_row)
