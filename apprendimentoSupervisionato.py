@@ -3,7 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.model_selection import KFold, RepeatedKFold, learning_curve, train_test_split, cross_val_score, GridSearchCV
 from sklearn.pipeline import Pipeline
-from sklearn.linear_model import Ridge, LinearRegression  # ||y - Xw||^2_2 + alpha * ||w||^2_2#
+import json
+from sklearn.linear_model import Ridge  # ||y - Xw||^2_2 + alpha * ||w||^2_2#
+from sklearn.dummy import DummyRegressor
 # Funzione che mostra la curva di apprendimento per ogni modello
 
 
@@ -22,8 +24,12 @@ def plot_learning_curves(model, X, y, differentialColumn, model_name):
     test_errors_var = np.var(test_errors, axis=1)
 
     # Stampa i valori numerici della deviazione standard e della varianza
-    print(
-        f"\033[95m{model_name} - Train Error Std: {train_errors_std[-1]}, Test Error Std: {test_errors_std[-1]}, Train Error Var: {train_errors_var[-1]}, Test Error Var: {test_errors_var[-1]}\033[0m")
+    log_message = (f"{model_name} - Train Error Std: {train_errors_std[-1]}, "
+                   f"Test Error Std: {test_errors_std[-1]}, Train Error Var: {train_errors_var[-1]}, "
+                   f"Test Error Var: {test_errors_var[-1]}")
+    # Log the message to a file
+    with open('learning_curve_log.txt', 'a') as log_file:
+        log_file.write(log_message + '\n')
 
     # Calcola gli errori medi su addestramento e test
     mean_train_errors = np.mean(train_scores, axis=1) * -1
@@ -49,8 +55,7 @@ def returnBestHyperparametres(dataset, differentialColumn):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
     ridgeReg = Ridge()
-    catboost = CatBoostRegressor(logging_level='Silent')
-    linearReg = LinearRegression()
+    catboost = CatBoostRegressor()
     RidgeRegressorHyperparameters = {
         'Ridge__alpha': [0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 14, 15, 16],
         'Ridge__solver': ['auto'],
@@ -61,38 +66,15 @@ def returnBestHyperparametres(dataset, differentialColumn):
         'CatBoost__depth': [ 6, 7, 8],
         'CatBoost__learning_rate': [0.01, 0.05, 0.1],
         'CatBoost__l2_leaf_reg': [1, 3],
-        'verbose': [False]
+        'CatBoost__verbose': [False]
     }
-
-    LinearRegressorHyperparameters = {
-        'Linear__fit_intercept': [True, False],
-     
-    }
-
-    DecisionTreeHyperparameters = {
-        'DecisionTree__criterion': ['gini', 'entropy', 'log_loss'],
-        'DecisionTree__max_depth': [None, 5, 10],
-        'DecisionTree__min_samples_split': [2, 5, 10, 20],
-        'DecisionTree__min_samples_leaf': [1, 2, 5, 10, 20],
-        'DecisionTree__splitter': ['best']}
-    RandomForestHyperparameters = {
-        'RandomForest__criterion': ['gini', 'entropy', 'log_loss'],
-        'RandomForest__n_estimators': [10, 20, 50],
-        'RandomForest__max_depth': [None, 5, 10],
-        'RandomForest__min_samples_split': [2, 5, 10, 20],
-        'RandomForest__min_samples_leaf': [1, 2, 5, 10, 20]}
-    LogisticRegressionHyperparameters = {
-        'LogisticRegression__C': [0.001, 0.01, 0.1, 1, 10, 100],
-        'LogisticRegression__penalty': ['l2'],
-        'LogisticRegression__solver': ['liblinear', 'lbfgs'],
-        'LogisticRegression__max_iter': [100000, 150000]}
 
     gridSearchCV_ridgeReg = GridSearchCV(
         Pipeline([('Ridge', ridgeReg)]), RidgeRegressorHyperparameters, cv=5)
     gridSearchCV_catboost = GridSearchCV(
         Pipeline([('CatBoost', catboost)]), CatBoostHyperparameters, cv=5)
-    gridSearchCV_linearReg = GridSearchCV(
-        Pipeline([('Linear', linearReg)]), LinearRegressorHyperparameters, cv=5)
+    # gridSearchCV_linearReg = GridSearchCV(
+    #     Pipeline([('Linear', linearReg)]), LinearRegressorHyperparameters, cv=5)
     # gridSearchCV_dtc = GridSearchCV(
     #     Pipeline([('DecisionTree', dtc)]), DecisionTreeHyperparameters, cv=5)
     # gridSearchCV_rfc = GridSearchCV(
@@ -102,7 +84,7 @@ def returnBestHyperparametres(dataset, differentialColumn):
 
     gridSearchCV_ridgeReg.fit(X_train, y_train)
     gridSearchCV_catboost.fit(X_train, y_train)
-    gridSearchCV_linearReg.fit(X_train, y_train)
+    # gridSearchCV_linearReg.fit(X_train, y_train)
     # gridSearchCV_dtc.fit(X_train, y_train)
     # gridSearchCV_rfc.fit(X_train, y_train)
     # gridSearchCV_reg.fit(X_train, y_train)
@@ -113,7 +95,7 @@ def returnBestHyperparametres(dataset, differentialColumn):
         'CatBoost__depth': gridSearchCV_catboost.best_params_['CatBoost__depth'],
         'CatBoost__learning_rate': gridSearchCV_catboost.best_params_['CatBoost__learning_rate'],
         'CatBoost__l2_leaf_reg': gridSearchCV_catboost.best_params_['CatBoost__l2_leaf_reg'],
-        'Linear__fit_intercept': gridSearchCV_linearReg.best_params_['Linear__fit_intercept'],
+        # 'Linear__fit_intercept': gridSearchCV_linearReg.best_params_['Linear__fit_intercept'],
        
         # 'DecisionTree__criterion': gridSearchCV_dtc.best_params_['DecisionTree__criterion'],
         # 'DecisionTree__max_depth': gridSearchCV_dtc.best_params_['DecisionTree__max_depth'],
@@ -143,14 +125,20 @@ def trainModelKFold(dataSet, differentialColumn):
             'neg_root_mean_squared_error': [],
             'r2': [],
         },
-        'Linear': {
+        'Dummy': {
             'neg_root_mean_squared_error': [],
             'r2': [],
         }
+        # 'Linear': {
+        #     'neg_root_mean_squared_error': [],
+        #     'r2': [],
+        # }
     }
     bestParameters = returnBestHyperparametres(dataSet, differentialColumn)
-    # print bestParamestre in blue
-    print("\033[94m" + str(bestParameters) + "\033[0m")
+
+    # Log best parameters to a file
+    with open('best_parameters.json', 'w') as file:
+        json.dump(bestParameters, file, indent=4)
     X = dataSet.drop(differentialColumn, axis=1).to_numpy()
     y = dataSet[differentialColumn].to_numpy()
     # dtc = DecisionTreeClassifier(criterion=bestParameters['DecisionTree__criterion'],
@@ -173,28 +161,31 @@ def trainModelKFold(dataSet, differentialColumn):
                                  depth=bestParameters['CatBoost__depth'],
                                  learning_rate=bestParameters['CatBoost__learning_rate'],
                                  l2_leaf_reg=bestParameters['CatBoost__l2_leaf_reg'])
-    linear = LinearRegression(fit_intercept=bestParameters['Linear__fit_intercept'])
-    cv = KFold(n_splits=6, shuffle=True)
+    dummy = DummyRegressor(strategy="mean")
+    # linear = LinearRegression(fit_intercept=bestParameters['Linear__fit_intercept'])
+    cv = RepeatedKFold(n_splits=5, n_repeats=5)
+
     scoring_metrics = ['neg_root_mean_squared_error', 'r2']
-    # results_dtc = {}
-    # results_rfc = {}
-    # results_reg = {}
+
     results_ridge = {}
     results_catboost = {}
-    results_linear = {}
+    results_dummy = {}
+    # results_linear = {}
     for metric in scoring_metrics:
         # scores_dtc = cross_val_score(dtc, X, y, scoring=metric, cv=cv)
         # scores_rfc = cross_val_score(rfc, X, y, scoring=metric, cv=cv)
         # scores_reg = cross_val_score(reg, X, y, scoring=metric, cv=cv)
         score_ridge = cross_val_score(ridge, X, y, scoring=metric, cv=cv)
         score_catboost = cross_val_score(catboost, X, y, scoring=metric, cv=cv)
-        score_linear = cross_val_score(linear, X, y, scoring=metric, cv=cv)
+        score_dummy = cross_val_score(dummy, X, y, scoring=metric, cv=cv)
+        # score_linear = cross_val_score(linear, X, y, scoring=metric, cv=cv)
         # results_dtc[metric] = scores_dtc
         # results_rfc[metric] = scores_rfc
         # results_reg[metric] = scores_reg
         results_ridge[metric] = score_ridge
         results_catboost[metric] = score_catboost
-        results_linear[metric] = score_linear
+        results_dummy[metric] = score_dummy
+        # results_linear[metric] = score_linear
     # model['LogisticRegression']['accuracy_list'] = (results_reg['accuracy'])
     # model['LogisticRegression']['precision_list'] = (
     #     results_reg['precision_macro'])
@@ -214,13 +205,17 @@ def trainModelKFold(dataSet, differentialColumn):
     model['CatBoost']['neg_root_mean_squared_error'] = (
         results_catboost['neg_root_mean_squared_error'])
     model['CatBoost']['r2'] = (results_catboost['r2'])
-    model['Linear']['neg_root_mean_squared_error'] = (
-        results_linear['neg_root_mean_squared_error'])
-    model['Linear']['r2'] = (results_linear['r2'])
+    model['Dummy']['neg_root_mean_squared_error'] = (
+        results_dummy['neg_root_mean_squared_error'])
+    model['Dummy']['r2'] = (results_dummy['r2'])
+    # model['Linear']['neg_root_mean_squared_error'] = (
+    #     results_linear['neg_root_mean_squared_error'])
+    # model['Linear']['r2'] = (results_linear['r2'])
 
     plot_learning_curves(ridge, X, y, differentialColumn, 'Ridge')
     plot_learning_curves(catboost, X, y, differentialColumn, 'CatBoost')
-    plot_learning_curves(linear, X, y, differentialColumn, 'Linear')
+    plot_learning_curves(dummy, X, y, differentialColumn, 'Dummy')
+    # plot_learning_curves(linear, X, y, differentialColumn, 'Linear')
     # plot_learning_curves(rfc, X, y, differentialColumn, 'RandomForest')
     # plot_learning_curves(reg, X, y, differentialColumn, 'LogisticRegression')
     visualizeMetricsGraphs(model)

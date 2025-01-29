@@ -1,10 +1,10 @@
 from owlready2 import *
 import os
 
-rdf_file_path = "mioVino.rdf"
+rdf_file_path = "mioVinoIndividui.rdf"
 if os.path.exists(rdf_file_path):
     os.remove(rdf_file_path)
-onto = get_ontology("file://mioVino.rdf")
+onto = get_ontology("file://mioVinoIndividui.rdf")
 
 # Carico le classi nel ontologia
 with onto:
@@ -70,28 +70,28 @@ with onto:
 
 
 # carica gli individui nel ontologia
-# import pandas as pd
+import pandas as pd
 
-# df = pd.read_csv('./modified/aggregatedDatasetSanitazed.csv')
+df = pd.read_csv('./modified/aggregatedDatasetSanitazed.csv')
 
-# df_selected = df[['Region', 'Country', 'Winery']]
-
-
-# for index, row in df_selected.iterrows():
-#     Winery(row['Winery'],namespace=onto,is_from_country=[row['Country']],is_from_region=[row['Region']])
+df_selected = df[['Region', 'Country', 'Winery']]
 
 
-# for index,row in df.iterrows():
-#     if row['WineCategory'] == "red":
-#         Red_wine(row['Name'],namespace=onto,is_made_by=[Winery(row['Winery'],namespace=onto,is_from_country=[row['Country']],is_from_region=[row['Region']])],is_made_from=[Grape(row['Grapes'])])
-#     elif row['WineCategory'] == "rose":
-#         Rose_wine(row['Name'],namespace=onto,is_made_by=[Winery(row['Winery'],namespace=onto,is_from_country=[row['Country']],is_from_region=[row['Region']])],is_made_from=[Grape(row['Grapes'])])
-#     elif row['WineCategory'] == "white":
-#         White_wine(row['Name'],namespace=onto,is_made_by=[Winery(row['Winery'],namespace=onto,is_from_country=[row['Country']],is_from_region=[row['Region']])],is_made_from=[Grape(row['Grapes'])])
-#     elif row['WineCategory'] == "sparkling":
-#         Sparkling_wine(row['Name'],namespace=onto,is_made_by=[Winery(row['Winery'],namespace=onto,is_from_country=[row['Country']],is_from_region=[row['Region']])],is_made_from=[Grape(row['Grapes'])])
-#     else :
-#         print("Riga malformata")
+for index, row in df_selected.iterrows():
+    Winery(row['Winery'],namespace=onto,is_from_country=[row['Country']],is_from_region=[row['Region']])
+
+
+for index,row in df.iterrows():
+    if row['WineCategory'] == "red":
+        Red_wine(row['Name'],namespace=onto,is_made_by=[Winery(row['Winery'],namespace=onto,is_from_country=[row['Country']],is_from_region=[row['Region']])],is_made_from=[Grape(row['Grapes'])])
+    elif row['WineCategory'] == "rose":
+        Rose_wine(row['Name'],namespace=onto,is_made_by=[Winery(row['Winery'],namespace=onto,is_from_country=[row['Country']],is_from_region=[row['Region']])],is_made_from=[Grape(row['Grapes'])])
+    elif row['WineCategory'] == "white":
+        White_wine(row['Name'],namespace=onto,is_made_by=[Winery(row['Winery'],namespace=onto,is_from_country=[row['Country']],is_from_region=[row['Region']])],is_made_from=[Grape(row['Grapes'])])
+    elif row['WineCategory'] == "sparkling":
+        Sparkling_wine(row['Name'],namespace=onto,is_made_by=[Winery(row['Winery'],namespace=onto,is_from_country=[row['Country']],is_from_region=[row['Region']])],is_made_from=[Grape(row['Grapes'])])
+    else :
+        print("Riga malformata")
 
 
 onto.save()
