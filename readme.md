@@ -1,11 +1,14 @@
 ---
 title: "MioVino"
 author: [Losurdo Mauro, N* 778085,m.losurdo17@studenti.uniba.it]
-subtitle: "[https://github.com/Switcha57/Icon2024-25](https://github.com/Switcha57/Icon2024-25)"
+subtitle: "[https://github.com/Switcha57/Icon2](https://github.com/Switcha57/icon2)"
 keywords: [Icon project]
 toc-own-page: true
 titlepage: true
 toc: true
+link-citations: true
+linkcolor: blue
+
 date: AA 2024-25
 output:
   pdf_document:
@@ -14,7 +17,7 @@ output:
 
 ## 1. Introduzione
 
-L'obbiettivo di questo progetto è quello di effetuare uno studio sulle valutazione dei vini, per capire quali caratteristiche (feature) del prodotto sono quelle piu apprezzati dai critici.
+L'obbiettivo di questo progetto è quello di effettuare uno studio sulle valutazione dei vini, per capire quali caratteristiche (feature) del prodotto sono quelle piu apprezzati dai critici.
 
 Inoltre il sistema ha l'obbiettivo di poter fornire un plausibile ranking anche a vini senza o poche recensioni dato che come in molti settori, c'è un problema con la distribuzione delle recensioni, dato che gli acquirenti tendono a non acquistare vini con poche recensioni, e dato che pochi acquirenti acquistano quel vino, quel vino continuerà ad avere poche recensioni, quindi il poter dare un rating iniziale plausibile permetterebbe di convincere più consumatori a provare quel vino.  
 
@@ -25,6 +28,23 @@ Inoltre il sistema ha l'obbiettivo di poter fornire un plausibile ranking anche 
 - Ragionamento probabilistico e Bayesian Network: Apprendimento della Struttura,Dati mancanti
 
 ### 1.2. Requisiti funzionali
+
+Il
+progetto è stato realizzato in Python in quanto è un linguaggio che offre a
+disposizione molte librerie che permetto di trattare i dati in modo facile e intuitivo.
+Versione Python: 3.10
+
+Librerie utilizzate:
+
+- seaborn:  Creazione grafici
+- networkx: visualizzazione di grafi (usato per osservare la struttura della rete
+bayesiana)
+- numpy: libreria per le funzioni matematiche applicate ad array e matrici
+- pandas: gestione Dataset
+- Owlready2: creazione Ontologia e manipolazione
+- pgmpy: creazione della rete bayesiana
+- scikit_learn: libreria utilizzata per apprendimento automatico
+- catboost: libreria che implementa il modello catboost
 
 ## 2. Creazione Dataset e Semantica
 
@@ -60,8 +80,8 @@ dtypes: float64(2), int64(2), object(5)
 - **NumberOfRatings**: Il numero totale di voti che il vino ha ricevuto.
 - **Price**: Il prezzo del vino.
 - **Year**: L'anno in cui il vino è stato prodotto, alcuni vini sono composti da più annate ed erano indicati con N.V, è stata sostituita quella dicitura con un valore non compreso nel dataset '2025'.
-- **CategoriaVino**: La categoria o tipo di vino (es. rosso, bianco, spumante).
-- **Uve**: La varietà di uve utilizzate per produrre il vino.
+- **WineCategory**: La categoria o tipo di vino (es. rosso, bianco, spumante).
+- **Grapes**: La varietà di uve utilizzate per produrre il vino.
 
 ### 2.1. Ontologie
 
@@ -79,7 +99,7 @@ RDF è uno standard per la rappresentazione dei dati sul web. Utilizza una strut
 
 piu specificamente nel progetto ho usato RDF/XML che  è una sintassi per serializzare i dati RDF in formato XML. Questo formato combina la flessibilità di RDF con la struttura gerarchica di XML, rendendo i dati facilmente leggibili e processabili sia da esseri umani che da macchine. RDF/XML è il formato standard usato da Owlready2.
 
-La rappresentazione rdf/xml dell' ontologia è disponibile nel file [mioVinoIndividui.rdf](mioVinoIndividui.rdf), nel file [mioVino.rdf](mioVino.rdf) invece sono stati omessi gli indivdui.
+La rappresentazione rdf/xml dell' ontologia è disponibile nel file [mioVinoIndividui.rdf](mioVinoIndividui.rdf), nel file [mioVino.rdf](mioVino.rdf) invece sono stati omessi gli individui.
 
 ### 2.3. SPARQL
 
@@ -142,19 +162,19 @@ i modelli che ho considerato sono
 Gli iper-parametri sono i parametri di un modello di apprendimento automatico, i
 quali non vengono appresi durante la fase di addestramento come i normali parametri
 del modello (es. i pesi di una funzione lineare) ma devono essere necessariamente
-fissati prima che il modello possa cominciare l’addestramento. La loro scelta influisce
-sulle prestazioni e sulla complessità del modello. Uno dei compiti più complessi è
-proprio la scelta degli iper-parametri per i vari modelli.
+fissati prima che il modello possa cominciare l’addestramento.
+
 Per la scelta degli iper-parametri ho utilizzato una tecnica di K-Fold Cross Validation
 (CV).
-Nella K-Fold CV il dataset viene diviso in k fold (insiemi disgiunti) e il modello viene
-addestrato k volte. Per ogni iterazione 1 fold viene usato per il testing mentre gli altri
-k-1 fold vengono utilizzati per il training. In questo modo è possibile testare e
-addestrare il modello su dati diversi per comprendere “la bontà” del modello.
-La strategia che ho deciso di applicare per ricercare gli iper-parametri dei miei modelli
-è la GridSearch con Cross Validation. In questo approccio vengono definite le griglie
-dei valori possibili per gli iper-parametri e si esplorano tutte le combinazioni possibili
-alla ricerca della miglior combinazione possibile.
+Nella Cross Validation (CV) si trattiene parte dei dati di training per valutare un modello
+appreso sulla base del resto degli esempi di training.
+Si dividono i dati non di test in due parti: un insieme di training, e un insieme di validazione.
+per valutare diversi
+ modelli (o diverse configurazioni degli iperparametri).
+
+
+La strategia applicata per ricercare gli iper-parametri dei modelli
+è la GridSearch con Cross Validation  che applica una ricerca esaustiva su tutte le combinazioni di iperparametri
 
 ### 3.2. Iper-parametri dei modelli
 
@@ -192,7 +212,7 @@ Per valutare le performance dei modelli, sono state utilizzate due metriche prin
 
 Le performance dei modelli sono state confrontate utilizzando queste metriche per determinare quale modello fornisce le previsioni più accurate.
 
-per confronto è stato aggiunto anche una baseline (indicato con dummy nei grafici) che ottimizasse la loss quadratica media.
+per confronto è stato aggiunto anche una baseline (indicato con dummy nei grafici) che ottimizzasse la loss quadratica media.
 
 ![](Plots/confronto_modelli.png)
 
@@ -207,7 +227,7 @@ Forma della curva strana delle possibili spiegazioni potrebbero essere
 - Problemi nella rappresentazioni dei dati
   - Possibilmente usando un encoder diverso si avrebbero avuti risultati migliori
 - Range dei valori numerici
-  - Si potrebbe effetuare una normalizzazione dei range
+  - Si potrebbe effettuare una normalizzazione dei range
 - No Free Lunch Theory
   - Nessun modello di machine learning è universalmente migliore di un altro per tutti i problemi. La performance di un modello dipende dal problema specifico e dai dati utilizzati.[^2]
 
@@ -231,17 +251,21 @@ Una delle strutture più comuni per il ragionamento probabilistico è la rete ba
 
 Nelle reti bayesiane, la capacità di gestire dati mancanti è una delle caratteristiche fondamentali. Grazie alle distribuzioni di probabilità condizionate, anche se alcune variabili non sono note, la rete può comunque inferire valori plausibili per la variabile di interesse basandosi sulle dipendenze note e sulle informazioni disponibili.
 
-### Struttura rete bayesiana
+### 4.1. Struttura rete bayesiana
 
 Ho provato vari algoritmi di apprendimento della struttura ma:
 
 - *HillClimbSearch*
-  - Dato il range dei valori numeri e la sparisità dei valori, anche dopo l'applicazione di una tecnica di binning non è stato possibile applicare l'algoritmo per enorme necessità di memoria
+  - Dato il range dei valori numeri e la natura sparsa dei valori, anche dopo l'applicazione di una tecnica di binning non è stato possibile applicare l'algoritmo per enorme necessità di memoria
 - *ExhaustiveSearch*
-  - ![Algoritmo naive di apprendimento della struttura](Plots/ExhationSearch.jpg)
-  - Tempo computazionale non accettabile
+
+![Algoritmo naive di apprendimento della struttura](Plots/ExhationSearch.jpg)
+
+Tempo computazionale non accettabile
+
 - *TreeSearch*
-  - ![Algoritmo non adatto al dataset](Plots/trree_search.png)
+
+![Algoritmo non adatto al dataset](Plots/trree_search.png)
 
 Quindi Ho deciso allora di fornire una struttura arbitraria alla rete bayesiana.
 
@@ -251,16 +275,18 @@ Quindi Ho deciso allora di fornire una struttura arbitraria alla rete bayesiana.
 
 ![Esempio di generazione di un esempio randomico.](image.png)
 
-## Sviluppi Futuri
+## 5. Sviluppi Futuri
 
 Un possibile sviluppo consiste nell'allineare l'ontologia Top-level esistenti per facilitare un'ulteriore espansione.
 
 In questo modo si potranno integrare informazioni quali la composizione del suolo nelle diverse regioni, le specifiche tecniche delle uve (acidità, tipologia di buccia, ecc.) e altri fattori che influenzano la qualità del vino. Ciò consentirebbe di estendere il dataset con dati più completi, migliorando le analisi sia in ambito di apprendimento supervisionato sia nelle procedure di inferenza probabilistica.
 
-## 5. Rifermenti Bibliografici
+## 6. Rifermenti Bibliografici
 
 ::: {#refs}
 :::
+
+@Poole_Mackworth_2023
 
 [^1]: @Lohmann2014WebVOWLWV
 [^2]: @10.1162/neco.1996.8.7.1341
