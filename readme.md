@@ -229,6 +229,8 @@ Il ragionamento probabilistico si basa sulla teoria delle probabilità e consent
 
 Una delle strutture più comuni per il ragionamento probabilistico è la rete bayesiana. Una rete bayesiana è un modello grafico che rappresenta un insieme di variabili e le loro dipendenze condizionali tramite un grafo aciclico diretto (DAG). Ogni nodo del grafo rappresenta una variabile, mentre gli archi rappresentano le dipendenze probabilistiche tra le variabili.
 
+Nelle reti bayesiane, la capacità di gestire dati mancanti è una delle caratteristiche fondamentali. Grazie alle distribuzioni di probabilità condizionate, anche se alcune variabili non sono note, la rete può comunque inferire valori plausibili per la variabile di interesse basandosi sulle dipendenze note e sulle informazioni disponibili.
+
 ### Struttura rete bayesiana
 
 Ho provato vari algoritmi di apprendimento della struttura ma:
@@ -239,12 +241,21 @@ Ho provato vari algoritmi di apprendimento della struttura ma:
   - ![Algoritmo naive di apprendimento della struttura](Plots/ExhationSearch.jpg)
   - Tempo computazionale non accettabile
 - *TreeSearch*
-  - ![Algoritmo non adatto al dataset](Plots/treeSearch.jpg)
+  - ![Algoritmo non adatto al dataset](Plots/trree_search.png)
 
 Quindi Ho deciso allora di fornire una struttura arbitraria alla rete bayesiana.
 
+![](Plots/simpleBayGraph.png)
+
 ![Esempio CPD di una variabile dipendente](Plots/cpd%20Rating.png)
 
+![Esempio di generazione di un esempio randomico.](image.png)
+
+## Sviluppi Futuri
+
+Un possibile sviluppo consiste nell'allineare l'ontologia Top-level esistenti per facilitare un'ulteriore espansione.
+
+In questo modo si potranno integrare informazioni quali la composizione del suolo nelle diverse regioni, le specifiche tecniche delle uve (acidità, tipologia di buccia, ecc.) e altri fattori che influenzano la qualità del vino. Ciò consentirebbe di estendere il dataset con dati più completi, migliorando le analisi sia in ambito di apprendimento supervisionato sia nelle procedure di inferenza probabilistica.
 
 ## 5. Rifermenti Bibliografici
 

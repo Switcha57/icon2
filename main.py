@@ -52,7 +52,7 @@ bayesianNetwork = reteBayesana.bNetCreation(wines_enc)
 
 # # GENERAZIONE DI UN ESEMPIO RANDOMICO e PREDIZIONE DELLA SUA CLASSE
 esempioRandom = reteBayesana.generateRandomExample(bayesianNetwork)
-print("ESEMPIO RANDOMICO GENERATO --->  ", esempioRandom)
+print("ESEMPIO RANDOMICO GENERATO\n ", esempioRandom.head())
 print(esempioRandom.info())
 print("PREDIZIONE DEL SAMPLE RANDOM")
 reteBayesana.predici(bayesianNetwork, esempioRandom.to_dict(
@@ -60,7 +60,7 @@ reteBayesana.predici(bayesianNetwork, esempioRandom.to_dict(
 
 # Ipotiziamo un vino senza valutazioni
 del (esempioRandom['NumberOfRatings'])
-print("ESEMPIO RANDOMICO SENZA Ratings ----> ", esempioRandom)
+print("ESEMPIO RANDOMICO SENZA Ratings\n", esempioRandom)
 print("PREDIZIONE DEL SAMPLE RANDOM SENZA Ratings")
 reteBayesana.predici(bayesianNetwork, esempioRandom.to_dict(
     'records')[0], differentialColumn)
